@@ -18,3 +18,9 @@ Then, from the project directory run the following:
 npm i
 npm start
 ```
+
+The UI is available on http://localhost:7675 (unless options changed in .env file)
+
+### Docker:
+
+For those experienced with docker, you can refer to the [example compose file](example-docker-compose.yml) to build a docker container for this. Mount a volume to where the log file will go, if wanted. 

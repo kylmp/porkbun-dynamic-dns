@@ -1,0 +1,15 @@
+version: '3.4'
+services:
+  porkbun-dynamic-dns:
+    image: porkbun-dynamic-dns
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=America/Chicago
+    env_file:
+      - .env
+    volumes:
+      - /path/to/config/dir:/app
