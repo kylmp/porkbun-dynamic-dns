@@ -7,7 +7,7 @@ const start = getTimestamp();
 const uiEnabled = (process.env.UI_ENABLED || 'no') === 'no' ? false : true;
 const uiPort = parseInt(process.env.PORT || 7675);
 const uiUrl = process.env.UI_URL || `http://${process.env.UI_HOST_IP}:${uiPort}`;
-const uiTheme = (process.env.UI_THEME || 'light') === 'light' ? true : false;
+const uiLightTheme = (process.env.UI_THEME || 'light') === 'light';
 const logEnabled = (process.env.LOG_ENABLED || 'no') === 'no' ? false : true;
 const logFile = `${process.env.LOG_DIRECTORY || ''}porkbun-dynamic-dns.log`;
 const interval = parseInt(process.env.UPDATE_INTERVAL || 300) * 1000;
@@ -43,8 +43,8 @@ let ipChangeCount = 0;
 
 if (uiEnabled) {
   const server = express();
-  const cssDark = `body { font-family: arial, sans-serif; color: #cccccc; background-color: #111111 }tr:nth-child(even) { background-color: #222222; }td, th { border: 1px solid #555555; text-align: left; padding: 8px; }table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }button { color: #dddddd; background-color: #333333; }`
-  const cssLight = `body { font-family: arial, sans-serif; }tr:nth-child(even) { background-color: #dddddd; }td, th { border: 1px solid #dddddd; text-align: left; padding: 8px; }table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }`
+  const cssDark = `body { font-family: arial, sans-serif; color: #cccccc; background-color: #111111 }tr:nth-child(even) { background-color: #222222; }td, th { border: 1px solid #555555; text-align: left; padding: 8px; }table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }button {  background-color: #333333;  border: 1px solid transparent;  border-radius: .65rem;  box-sizing: border-box;  color: #FFFFFF;  cursor: pointer;  flex: 0 0 auto;  font-family: arial, sans-serif;  font-size: .9rem;  font-weight: 250;  line-height: 1rem;  padding: .5rem .8rem;  text-align: center;  text-decoration: none #6B7280 solid;  text-decoration-thickness: auto;  transition-duration: .2s;  transition-property: background-color,border-color,color,fill,stroke;  transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);  user-select: none;  -webkit-user-select: none;  touch-action: manipulation;  width: auto;}button:hover {  background-color: #374151;}button:focus {  box-shadow: none;  outline: 2px solid transparent;  outline-offset: 2px;}@media (min-width: 768px) {  button {    padding: .5rem 1rem;  }}`;
+  const cssLight = `body { font-family: arial, sans-serif; }tr:nth-child(even) { background-color: #dddddd; }td, th { border: 1px solid #dddddd; text-align: left; padding: 8px; }table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; }button {  background-color: #dddddd;  border: 1px solid transparent;  border-radius: .65rem;  box-sizing: border-box;  color: #222222;  cursor: pointer;  flex: 0 0 auto;  font-family: arial, sans-serif;  font-size: .9rem;  font-weight: 250;  line-height: 1rem;  padding: .5rem .8rem;  text-align: center;  text-decoration: none #6B7280 solid;  text-decoration-thickness: auto;  transition-duration: .2s;  transition-property: background-color,border-color,color,fill,stroke;  transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);  user-select: none;  -webkit-user-select: none;  touch-action: manipulation;  width: auto;}button:hover {  background-color: #cccccc;}button:focus {  box-shadow: none;  outline: 2px solid transparent;  outline-offset: 2px;}@media (min-width: 768px) {  button {    padding: .5rem 1rem;  }}`;
 
   server.listen(uiPort, () => {
     console.log(`UI is accessible at ${uiUrl}`);
@@ -53,7 +53,7 @@ if (uiEnabled) {
   server.get('/', (req, res) => {
     res.set('Content-Type', 'text/html');
     res.send(`
-      <!DOCTYPE html><html><head><style>${uiTheme ? cssLight : cssDark}</style></head><body>
+      <!DOCTYPE html><html><head><style>${uiLightTheme ? cssLight : cssDark}</style></head><body>
       <h3>Porkbun Dynamic DNS Updater</h3>
       <p>Status: <b>${status}</b></p>
       ${generateStatusTable()}<br/>
