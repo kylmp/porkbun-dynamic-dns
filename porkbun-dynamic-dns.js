@@ -16,6 +16,7 @@ const secKey = (process.env.PORKBUN_SECRET_KEY || '') === '' ? undefined : proce
 const domain = (process.env.DOMAIN_NAME || '') === '' ? undefined : process.env.DOMAIN_NAME;
 
 const recordType = 'A';
+const defaultTtl = '600';
 const records = [];
 const subdomains = (process.env.SUBDOMAINS_TO_UPDATE || '').split(',');
 if ((process.env.UPDATE_WILDCARD_DOMAIN || 'no') === 'yes') subdomains.unshift('*');
@@ -133,7 +134,7 @@ async function updateDnsRecord(index, ip) {
       "secretapikey": secKey,
       "apikey": apiKey,
       "content": ip,
-      "ttl": "600"
+      "ttl": (records[index].ttl || defaultTtl)
     });
     records[index].updated = getTimestamp();
     records[index].ip = ip;
