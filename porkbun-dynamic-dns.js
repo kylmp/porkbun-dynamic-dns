@@ -6,7 +6,8 @@ const axios = require('axios');
 const start = getTimestamp();
 const uiEnabled = (process.env.UI_ENABLED || 'no') === 'no' ? false : true;
 const uiPort = parseInt(process.env.PORT || 7675);
-const uiUrl = process.env.UI_URL || `http://${process.env.UI_HOST_IP}:${uiPort}`;
+const uiBaseUrl = process.env.UI_BASE_URL || '';
+const uiUrl = (process.env.UI_URL || `http://${process.env.UI_HOST_IP}:${uiPort}`) + uiBaseUrl;
 const uiLightTheme = (process.env.UI_THEME || 'light') === 'light';
 const logEnabled = (process.env.LOG_ENABLED || 'no') === 'no' ? false : true;
 const logFile = `${process.env.LOG_DIRECTORY || ''}porkbun-dynamic-dns.log`;
@@ -51,7 +52,7 @@ if (uiEnabled) {
     console.log(`UI is accessible at ${uiUrl}`);
   });
 
-  server.get('/', (req, res) => {
+  server.get(`${uiBaseUrl}/`, (req, res) => {
     res.set('Content-Type', 'text/html');
     res.send(`
       <!DOCTYPE html><html><head><style>${uiLightTheme ? cssLight : cssDark}</style></head><body>
@@ -66,7 +67,7 @@ if (uiEnabled) {
     `);
   });
 
-  server.get('/pause', (req, res) => {
+  server.get(`${uiBaseUrl}/pause`, (req, res) => {
     status = status === 'RUNNING' ? 'PAUSED' : 'RUNNING';
     res.redirect('/');
   });
