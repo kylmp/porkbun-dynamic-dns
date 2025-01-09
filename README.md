@@ -4,7 +4,7 @@ Automatically update porkbun dynamic DNS records with your up to date public IP
 ### Features:
 - Runs on a schedule (default 5 minutes)
 - Creates new DNS records if they do not already exist
-- Simple UI to monitor DNS update statuses
+- Simple UI to monitor DNS update statuses (now with dark theme config option)
 
 ![example image](ui.png)
 
