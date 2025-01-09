@@ -9,6 +9,7 @@ const uiPort = parseInt(process.env.PORT || 7675);
 const uiBaseUrl = process.env.UI_BASE_URL || '';
 const uiUrl = (process.env.UI_URL || `http://${process.env.UI_HOST_IP}:${uiPort}`) + uiBaseUrl;
 const uiLightTheme = (process.env.UI_THEME || 'light') === 'light';
+const uiFavicon = process.env.UI_FAVICON_FILE;
 const logEnabled = (process.env.LOG_ENABLED || 'no') === 'no' ? false : true;
 const logFile = `${process.env.LOG_DIRECTORY || ''}porkbun-dynamic-dns.log`;
 const interval = parseInt(process.env.UPDATE_INTERVAL || 300) * 1000;
@@ -53,9 +54,10 @@ if (uiEnabled) {
   });
 
   server.get(`${uiBaseUrl}/`, (req, res) => {
+    const favicon = uiFavicon ? `<link rel="icon" type="image/png" href="${uiFavicon}"/>` : '';
     res.set('Content-Type', 'text/html');
     res.send(`
-      <!DOCTYPE html><html><head><style>${uiLightTheme ? cssLight : cssDark}</style></head><body>
+      <!DOCTYPE html><html><head>${favicon}<style>${uiLightTheme ? cssLight : cssDark}</style></head><body>
       <h3>Porkbun Dynamic DNS Updater</h3>
       <p>Status: <b>${status}</b></p>
       ${generateStatusTable()}<br/>
