@@ -1,0 +1,30 @@
+{
+  "name": "porkbun-dynamic-dns",
+  "version": "1.0.0",
+  "description": "Automatically update porkbun dns records",
+  "main": "porkbun-dynamic-dns.js",
+  "scripts": {
+    "start": "node porkbun-dynamic-dns.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylmp/porkbun-dynamic-dns.git"
+  },
+  "keywords": [
+    "porkbun",
+    "ddns",
+    "dynamic",
+    "dns"
+  ],
+  "author": "Kylmp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kylmp/porkbun-dynamic-dns/issues"
+  },
+  "homepage": "https://github.com/kylmp/porkbun-dynamic-dns#readme",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
